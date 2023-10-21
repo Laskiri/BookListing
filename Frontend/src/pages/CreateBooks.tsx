@@ -1,43 +1,24 @@
-import React, { useState, useEffect }from 'react';
+import React, { useState }from 'react';
 import axios from 'axios';
 import Spinner from '../components/Spinner';
 import BackButton from '../components/BackButton';
 import { useNavigate } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
 
-const EditBook = () => {
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+
+const CreateBooks = () => {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [publishYear, setPublishYear] = useState(0);
-  const { id } = useParams<{ id: string }>();
-
-  useEffect(() => {
-    setLoading(true);
-    axios.get(`http://localhost:3000/books/${id}`)
-      .then((res) => {
-        setTitle(res.data.title);
-        setAuthor(res.data.author);
-        setPublishYear(res.data.publishYear);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setLoading(false);
-      });
-  }, [])
-
-
-
-  const handleUpdateBook = () => {
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const handleSaveBook = () => {
     const data = {
       title,
       author,
       publishYear
     };
     setLoading(true);
-    axios.put(`http://localhost:3000/books/${id}`, data)
+    axios.post('http://localhost:3000/books', data)
       .then(() => {
         setLoading(false);
         navigate('/');
@@ -53,7 +34,7 @@ const EditBook = () => {
   return (
     <div className="p-4">
       <BackButton />
-      <h1 className="text-3x1 my-4">Update Book</h1>
+      <h1 className="text-3x1 my-4">Create Book</h1>
       {loading ? (<Spinner />) : ''}
       <div className="flex flex-col border-2 border-sky-400 rounded-x1 w-[600px] p-4 mx-auto">
         <div className="my-4">
@@ -85,15 +66,13 @@ const EditBook = () => {
         </div>
         <button
           className="p-2 bg-sky-300 m-8"
-          onClick={handleUpdateBook}
+          onClick={handleSaveBook}
         >
-          Update
+          Save
         </button>
-        
       </div>
     </div>
   )
 }
 
-export default EditBook
-
+export default CreateBooks

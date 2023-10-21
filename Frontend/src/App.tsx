@@ -1,6 +1,6 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
-import CreateBook from './pages/CreateBook'
+import CreateBook from './pages/CreateBooks'
 import DeleteBook from './pages/DeleteBook'
 import ShowBook from './pages/ShowBook'
 import EditBook from './pages/EditBook'

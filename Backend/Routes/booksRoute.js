@@ -45,11 +45,14 @@ router.post('/', async (req, res) => {
         };
 
         const book = await Book.create(newBook);
-        res.status(201).send(book); n
+        if (book) {
+            res.status(201).send(book); 
+        }
+        
     }
     catch (err) {
         console.log(err.message);
-        response.status(500).send({ message: error.message });
+        res.status(500).send({ message: err.message });
     }
 })
 // Updating a book in the database
