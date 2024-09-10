@@ -8,9 +8,10 @@ import BooksCard from '../components/home/BooksCard'
 import BooksTable from '../components/home/BooksTable'
 
 const Home = () => {
+    const initialstate = localStorage.getItem('showType') || 'table'
     const [books, setBooks] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [showType, setShowType] = useState('table');
+    const [showType, setShowType] = useState(initialstate);
 
     useEffect(() => {
         setLoading(true);
@@ -25,6 +26,10 @@ const Home = () => {
                 setLoading(false);
             })
     }, []);
+
+    useEffect(() => {
+        localStorage.setItem('showType', showType)
+    }, [showType]);
 
     return (
         <div className='p-4'>
